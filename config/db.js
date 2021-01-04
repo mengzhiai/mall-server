@@ -1,14 +1,15 @@
 /*
  * @Date: 2020-12-24 23:49:17
- * @Description: 数据库连接池
+ * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2020-12-24 23:53:23
+ * @LastEditTime: 2021-01-05 00:08:01
  * @FilePath: \mall-server\config\db.js
  */
+var mysql = require('mysql');
+const { dbConfig } = require('./mysql');
+var pool = mysql.createPool(dbConfig);
 
-const mysql = require('mysql');
-const { dbConfig } = require('../config/db');
-const pool = mysql.createPool(dbConfig);
+var db = {};
 
 db.query = function (sql, params) {
 
@@ -22,7 +23,7 @@ db.query = function (sql, params) {
       }
 
       connection.query(sql, params, function (error, results, fields) {
-        console.log(`${ sql }=>${ params }`);
+        console.log('aaaa',`${ sql }=>${ params }`);
         // 释放连接
         connection.release();
         if (error) {
@@ -37,7 +38,3 @@ db.query = function (sql, params) {
 }
 // 导出对象
 module.exports = db;
-
-
-
-
