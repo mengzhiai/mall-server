@@ -2,7 +2,7 @@
  * @Date: 2021-01-05 00:16:32
  * @Description: 用户信息
  * @LastEditors: jun
- * @LastEditTime: 2021-01-14 23:42:57
+ * @LastEditTime: 2021-01-18 23:19:19
  * @FilePath: \mall-server\app\controller\userController.js
  */
 const userDao = require('../model/userDao');
@@ -35,6 +35,7 @@ module.exports = {
         name: userName,
         _id: password
       }, 'token', { expiresIn: '2h' });
+      ctx.session.token = token;
       return ctx.body = {
         code: '000001',
         data: token,

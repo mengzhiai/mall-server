@@ -2,7 +2,7 @@
  * @Date: 2020-12-24 22:41:34
  * @Description: app.js
  * @LastEditors: jun
- * @LastEditTime: 2021-01-14 23:44:44
+ * @LastEditTime: 2021-01-19 00:07:31
  * @FilePath: \mall-server\app.js
  */
 const Koa = require('koa');
@@ -29,9 +29,11 @@ app.use(koaBody());
 
 
 // token检查
-// const tokenCheck = require('./app/middleware/tokenCheck');
+const tokenCheck = require('./app/middleware/tokenCheck');
+app.use(tokenCheck())
 
 
+// 设置token
 app.keys = ['some secret hurr'];
 const CONFIG = {
   key: 'koa:sess', /** 默认 */
@@ -44,18 +46,18 @@ const CONFIG = {
 }
 app.use(session(CONFIG, app));
 
+
 // 使用路由中间件
 const routers = require('./app/router');
 app.use(routers.routes()).use(routers.allowedMethods());
 
 
 
-
-
 // 验证token
-app.use((ctx, next) => {
-  console.log(next);
+/* app.use((ctx, next) => {
+  console.log('ctx', ctx);
   return next().catch((err) => {
+    console.log('err.status', err.status);
       if(err.status === 401){
         ctx.body = {
           code: 401,
@@ -66,14 +68,16 @@ app.use((ctx, next) => {
       }
   })
 })
+ */
 
-app.use(koajwt({
+
+/* app.use(koajwt({
   secret: 'token'
 }).unless({
   path: [/\/user\/login/]
-}));
+})); */
 
-// app.use(tokenCheck())
+
 
 
 
