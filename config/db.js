@@ -2,7 +2,7 @@
  * @Date: 2020-12-24 23:49:17
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-01-05 00:08:01
+ * @LastEditTime: 2021-01-19 00:20:29
  * @FilePath: \mall-server\config\db.js
  */
 var mysql = require('mysql');
@@ -30,6 +30,8 @@ db.query = function (sql, params) {
           reject(error);
           return;
         }
+        resultData = JSON.stringify(results);
+        results = JSON.parse(resultData);
         resolve(results);
       });
 

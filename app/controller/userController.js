@@ -2,7 +2,7 @@
  * @Date: 2021-01-05 00:16:32
  * @Description: 用户信息
  * @LastEditors: jun
- * @LastEditTime: 2021-01-18 23:19:19
+ * @LastEditTime: 2021-01-19 00:24:20
  * @FilePath: \mall-server\app\controller\userController.js
  */
 const userDao = require('../model/userDao');
@@ -35,7 +35,11 @@ module.exports = {
         name: userName,
         _id: password
       }, 'token', { expiresIn: '2h' });
+      // session保存token
       ctx.session.token = token;
+      // 保存userId
+      ctx.session.userId = user[0].id;
+      
       return ctx.body = {
         code: '000001',
         data: token,
@@ -49,9 +53,9 @@ module.exports = {
     let params = ctx.quyery;
     return ctx.body = {
       code: 200,
-      data: params,
+      data: ctx.session,
       userName: ctx.session.userName,
-      message: '获取成功'
+      msg: '获取成功'
     }
   }
 }
