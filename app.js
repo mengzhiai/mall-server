@@ -2,7 +2,7 @@
  * @Date: 2020-12-24 22:41:34
  * @Description: app.js
  * @LastEditors: jun
- * @LastEditTime: 2021-01-19 00:07:31
+ * @LastEditTime: 2021-01-19 23:53:02
  * @FilePath: \mall-server\app.js
  */
 const Koa = require('koa');

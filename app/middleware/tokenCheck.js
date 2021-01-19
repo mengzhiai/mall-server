@@ -2,7 +2,7 @@
  * @Date: 2021-01-14 23:39:53
  * @Description: token检查
  * @LastEditors: jun
- * @LastEditTime: 2021-01-19 00:26:48
+ * @LastEditTime: 2021-01-20 00:11:35
  * @FilePath: \mall-server\app\middleware\tokenCheck.js
  */
 
@@ -10,7 +10,7 @@
 const tokenCheck = function () {
   return async function (ctx, next) {
     // 判断是否是登录
-    if((ctx.url).split('?')[0] == '/users/login') {
+    if((ctx.url).split('?')[0] == '/user/login') {
       await next();
       return
     }

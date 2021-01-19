@@ -2,15 +2,16 @@
  * @Date: 2021-01-05 00:16:32
  * @Description: 用户信息
  * @LastEditors: jun
- * @LastEditTime: 2021-01-19 00:24:20
+ * @LastEditTime: 2021-01-20 00:17:13
  * @FilePath: \mall-server\app\controller\userController.js
  */
-const userDao = require('../model/userDao');
+const {loginController} = require('../model/userDao');
 
 const jwt = require('jsonwebtoken')
 const secret = 'secret';
 
 module.exports = {
+  // 登录
   login: async ctx => {
     let { userName, password } = ctx.request.body;
     ctx.session.userName = 'Tom';
@@ -23,7 +24,7 @@ module.exports = {
     }
 
 
-    let user = await userDao.login(userName, password);
+    let user = await loginController(userName, password);
     if (user.length === 0) {
       ctx.body = {
         code: 422,
@@ -57,5 +58,22 @@ module.exports = {
       userName: ctx.session.userName,
       msg: '获取成功'
     }
+  },
+
+
+  // 注册
+  register: async ctx => {
+    let query = ctx.request.body;
+    console.log(query);
+    let { userName, password } = ctx.request.body;
+    if(userName && password) {
+      await registerController(userName, password);
+    } else {
+      ctx.body = {
+        code: 422,
+        msg: '请输入用户名和密码'
+      }
+    }
   }
 }
+
