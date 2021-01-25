@@ -2,10 +2,10 @@
  * @Date: 2021-01-05 00:16:32
  * @Description: 用户信息
  * @LastEditors: jun
- * @LastEditTime: 2021-01-20 00:17:13
+ * @LastEditTime: 2021-01-25 23:17:52
  * @FilePath: \mall-server\app\controller\userController.js
  */
-const {loginController} = require('../model/userDao');
+const userDao = require('../model/userDao');
 
 const jwt = require('jsonwebtoken')
 const secret = 'secret';
@@ -24,7 +24,7 @@ module.exports = {
     }
 
 
-    let user = await loginController(userName, password);
+    let user = await userDao.login(userName, password);
     if (user.length === 0) {
       ctx.body = {
         code: 422,
@@ -63,11 +63,18 @@ module.exports = {
 
   // 注册
   register: async ctx => {
-    let query = ctx.request.body;
-    console.log(query);
+    console.log('ctx', ctx.request.body);
     let { userName, password } = ctx.request.body;
+    const user = await userDao.findUserName(userName);
+
     if(userName && password) {
-      await registerController(userName, password);
+      let val = await user.registerController(userName, password);
+      if(val.affectedRows == 1) {
+        ctx.body = {
+          data: 200,
+          msg: '注册成功'
+        }
+      }
     } else {
       ctx.body = {
         code: 422,

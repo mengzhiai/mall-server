@@ -2,8 +2,8 @@
  * @Date: 2020-12-24 23:08:46
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-01-20 00:22:18
- * @FilePath: \mall-server\app\router\module\userRouter.js
+ * @LastEditTime: 2021-01-25 23:04:41
+ * @FilePath: \mall-server\app\router\user\userRouter.js
  */
 
 const Router = require('koa-router');
