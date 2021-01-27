@@ -2,9 +2,13 @@
  * @Date: 2021-01-25 23:07:15
  * @Description: 商品管理
  * @LastEditors: jun
- * @LastEditTime: 2021-01-25 23:59:21
+ * @LastEditTime: 2021-01-28 00:20:01
  * @FilePath: \mall-server\app\controller\productController.js
  */
+
+const {errorMsg, successMsg} = require('../middleware/errorMessage');
+
+const {isEmpty} = require('../middleware/validator');
 
 const productDao = require('../model/productDao');
 
@@ -13,35 +17,32 @@ module.exports = {
   productList: async ctx => {
     let productData = await productDao.productList();
     if(productData) {
-      ctx.body = {
-        data: productData,
-        code: 200,
-        msg: '获取成功'
-      }
+      ctx.body = successMsg(productData);
     }
   },
 
   // 添加商品
   addProduct: async ctx => {
     let params = ctx.request.body;
-    // console.log(parasm);
-    if(!params.categoryId) {
-      ctx.body = {
-        code: 422,
-        msg: '商品分类不能为空'
-      }
+    // 商品名称
+    if(isEmpty(params.productName)) {
+      ctx.body = errorMsg(422, '商品名称不能为空');
       return
     }
-    if(!params.productName) {
-      ctx.body = {
-        code: 422,
-        msg: '商品名称不能为空'
-      }
+    
+    // 商品分类
+    if(isEmpty(params.categoryId)) {
+      ctx.body = errorMsg(422, '商品分类不能为空');
       return
     }
-    ctx.body = {
-      params
+
+    // 商品价格
+    if(isEmpty(params.productPrice)) {
+      ctx.body = errorMsg(422, '商品价格不能为空');
+      return
     }
+
+    ctx.body = successMsg('11')
     let val = await productDao.addProduct();
   }
 }
