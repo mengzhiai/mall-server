@@ -2,13 +2,13 @@
  * @Date: 2021-01-25 23:07:15
  * @Description: 商品管理
  * @LastEditors: jun
- * @LastEditTime: 2021-01-28 00:20:01
+ * @LastEditTime: 2021-02-01 01:27:58
  * @FilePath: \mall-server\app\controller\productController.js
  */
 
-const {errorMsg, successMsg} = require('../middleware/errorMessage');
+const { errorMsg, addSuccess, getSucccess } = require('../middleware/errorMessage');
 
-const {isEmpty} = require('../middleware/validator');
+const { addProduct } = require('../middleware/validator');
 
 const productDao = require('../model/productDao');
 
@@ -16,33 +16,103 @@ module.exports = {
   // 获取商品列表
   productList: async ctx => {
     let productData = await productDao.productList();
-    if(productData) {
-      ctx.body = successMsg(productData);
+    if (productData) {
+      ctx.body = getSucccess(productData);
     }
   },
 
-  // 添加商品
+  /**
+   * @description: 添加商品
+   * @param {Object}
+   * @return {Object}
+   */
   addProduct: async ctx => {
     let params = ctx.request.body;
-    // 商品名称
-    if(isEmpty(params.productName)) {
-      ctx.body = errorMsg(422, '商品名称不能为空');
+    let error = addProduct(params);
+    console.log('error', error);
+    if (Object.keys(error) != 0) {
+      ctx.body = {
+        code: 400,
+        msg: error
+      };
       return
+    } else {
+      ctx.body = ctx;
     }
-    
-    // 商品分类
-    if(isEmpty(params.categoryId)) {
-      ctx.body = errorMsg(422, '商品分类不能为空');
+
+    // 添加商品
+    try {
+      let val = await productDao.addProduct(params);
+      if (val.affectedRows === 1) {
+        ctx.body = addSuccess();
+      }
+    } catch (error) {
+      ctx.body = errorMsg(400, error, '添加失败');
+    }
+  },
+
+
+  /**
+   * @description: 商品详情
+   * @param {String} productId
+   * @return {Object}
+   */
+
+  async detail(ctx) {
+    let { productId } = ctx.query;
+    if (!productId) {
+      ctx.body = (400, '', '商品id不能为空');
       return
     }
 
-    // 商品价格
-    if(isEmpty(params.productPrice)) {
-      ctx.body = errorMsg(422, '商品价格不能为空');
+    let data = await productDao.detail(productId);
+    if (!data.length) {
+      ctx.body = errorMsg(400, '', '商品id不能为空');
+      return
+    }
+    ctx.body = getSucccess(data);
+  },
+
+
+  /**
+   * @description: 删除商品
+   * @param {String} productId
+   * @return {*}
+   */
+  async delete(ctx) {
+    let { productId } = ctx.request.body;
+    if (!productId) {
+      ctx.body = errorMsg(400, '', '商品id不能为空');
       return
     }
 
-    ctx.body = successMsg('11')
-    let val = await productDao.addProduct();
+    let val = await productDao.detail(productId);
+    if (!val.length) {
+      ctx.body = errorMsg(400, '', '不存在此商品');
+      return
+    }
+
+    try {
+      let data = await productDao.delete(productId);
+      if (data.affectedRows === 1) {
+        ctx.body = addSuccess('删除成功');
+      }
+    } catch (error) {
+      ctx.body = errorMsg(400, error, '删除失败');
+    }
+  },
+
+
+  // 查询
+  async search(ctx) {
+    let { productName } = ctx.query;
+
+    try {
+      let list = await productDao.search(productName);
+      ctx.body = getSucccess(list, '查询成功');
+    } catch (error) {
+      ctx.body = errorMsg(400, error, '查询失败');
+    }
+
   }
 }
