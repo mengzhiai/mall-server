@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:26:20
  * @Description: 商品列表
  * @LastEditors: jun
- * @LastEditTime: 2021-02-01 01:21:03
+ * @LastEditTime: 2021-02-01 22:44:00
  * @FilePath: \mall-server\app\model\productDao.js
  */
 
@@ -10,14 +10,15 @@ const db = require("../../config/db");
 
 module.exports = {
   // 商品列表
-  productList: async () => {
+  async list() {
     const sql = `select * from product`;
     return await db.query(sql, [])
   },
 
   // 添加商品
-  addProduct: async (params) => {
-    const sql = `insert into product (product_name, category_id, product_price, product_desc) values(${params.productName}, ${params.categoryId}, ${params.productPrice}, '${params.productDesc}')`;
+  async add(params) {
+    const sql = `insert into product (product_name, category_id, product_price, product_desc, seckill_price, is_new) 
+    values('${params.productName}', ${params.categoryId}, ${params.productPrice}, '${params.productDesc}', ${params.seckillPrice}, ${params.isNew})`;
     return await db.query(sql, []);
   },
 

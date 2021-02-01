@@ -2,7 +2,7 @@
  * @Date: 2020-12-24 22:41:34
  * @Description: app.js
  * @LastEditors: jun
- * @LastEditTime: 2021-01-19 23:53:02
+ * @LastEditTime: 2021-02-01 22:20:55
  * @FilePath: \mall-server\app.js
  */
 const Koa = require('koa');
@@ -82,6 +82,6 @@ app.use(routers.routes()).use(routers.allowedMethods());
 
 
 
-app.listen(4000, () => {
+app.listen(5000, () => {
   console.log('server');
 })

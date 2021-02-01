@@ -2,11 +2,11 @@
  * @Date: 2021-01-25 23:07:15
  * @Description: 商品管理
  * @LastEditors: jun
- * @LastEditTime: 2021-02-01 01:27:58
+ * @LastEditTime: 2021-02-01 22:54:48
  * @FilePath: \mall-server\app\controller\productController.js
  */
 
-const { errorMsg, addSuccess, getSucccess } = require('../middleware/errorMessage');
+const { errorMsg, addSuccess, successMsg,  getSucccess } = require('../middleware/errorMessage');
 
 const { addProduct } = require('../middleware/validator');
 
@@ -14,10 +14,10 @@ const productDao = require('../model/productDao');
 
 module.exports = {
   // 获取商品列表
-  productList: async ctx => {
-    let productData = await productDao.productList();
+  async list(ctx) {
+    let productData = await productDao.list();
     if (productData) {
-      ctx.body = getSucccess(productData);
+      ctx.body = successMsg(productData, '获取成功');
     }
   },
 
@@ -26,14 +26,14 @@ module.exports = {
    * @param {Object}
    * @return {Object}
    */
-  addProduct: async ctx => {
+  async add(ctx) {
     let params = ctx.request.body;
     let error = addProduct(params);
     console.log('error', error);
     if (Object.keys(error) != 0) {
       ctx.body = {
         code: 400,
-        msg: error
+        msg: error.msg
       };
       return
     } else {
