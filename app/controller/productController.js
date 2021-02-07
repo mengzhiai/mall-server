@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:07:15
  * @Description: 商品管理
  * @LastEditors: jun
- * @LastEditTime: 2021-02-01 22:54:48
+ * @LastEditTime: 2021-02-07 23:53:26
  * @FilePath: \mall-server\app\controller\productController.js
  */
 
@@ -10,7 +10,7 @@ const { errorMsg, addSuccess, successMsg,  getSucccess } = require('../middlewar
 
 const { addProduct } = require('../middleware/validator');
 
-const productDao = require('../model/productDao');
+const productDao = require('../models/productDao');
 
 module.exports = {
   // 获取商品列表

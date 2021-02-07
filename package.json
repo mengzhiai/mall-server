@@ -17,8 +17,11 @@
     "koa-router": "^10.0.0",
     "koa-session": "^6.1.0",
     "koa-static": "^5.0.0",
+    "koa2": "^2.0.0-alpha.7",
     "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
     "nodemon": "^2.0.6",
+    "sequelize": "^6.5.0",
     "validator": "^13.5.2"
   }
 }

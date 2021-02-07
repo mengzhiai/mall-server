@@ -2,17 +2,20 @@
  * @Date: 2021-01-05 00:16:32
  * @Description: 用户信息
  * @LastEditors: jun
- * @LastEditTime: 2021-01-25 23:17:52
+ * @LastEditTime: 2021-02-08 00:44:01
  * @FilePath: \mall-server\app\controller\userController.js
  */
-const userDao = require('../model/userDao');
+// const userDao = require('../models/user');
 
 const jwt = require('jsonwebtoken')
 const secret = 'secret';
 
+const User = require('../models/user')
 module.exports = {
+
   // 登录
-  login: async ctx => {
+  async login(ctx) {
+    let params = ctx.request.body;
     let { userName, password } = ctx.request.body;
     ctx.session.userName = 'Tom';
     if (!userName || !password) {
@@ -23,14 +26,19 @@ module.exports = {
       return
     }
 
+    // 查找用户名和密码是否存在
+    let result = await User.findAll({
+      where: {
+        userName: userName,
+        password: password
+      }
+    });
 
-    let user = await userDao.login(userName, password);
-    if (user.length === 0) {
+    if (!result.length) {
       ctx.body = {
         code: 422,
-        message: '用户名或密码错误'
+        msg: '用户名或密码错误'
       }
-      return
     } else {
       const token = jwt.sign({
         name: userName,
@@ -39,10 +47,10 @@ module.exports = {
       // session保存token
       ctx.session.token = token;
       // 保存userId
-      ctx.session.userId = user[0].id;
-      
-      return ctx.body = {
-        code: '000001',
+      ctx.session.userId = result[0].id;
+
+      ctx.body = {
+        code: 200,
         data: token,
         msg: '登录成功'
       }
@@ -67,9 +75,9 @@ module.exports = {
     let { userName, password } = ctx.request.body;
     const user = await userDao.findUserName(userName);
 
-    if(userName && password) {
+    if (userName && password) {
       let val = await user.registerController(userName, password);
-      if(val.affectedRows == 1) {
+      if (val.affectedRows == 1) {
         ctx.body = {
           data: 200,
           msg: '注册成功'
