@@ -2,22 +2,29 @@
  * @Date: 2021-01-25 23:07:15
  * @Description: 商品管理
  * @LastEditors: jun
- * @LastEditTime: 2021-02-07 23:53:26
+ * @LastEditTime: 2021-02-10 01:32:34
  * @FilePath: \mall-server\app\controller\productController.js
  */
 
-const { errorMsg, addSuccess, successMsg,  getSucccess } = require('../middleware/errorMessage');
+const { errorMsg, successMsg } = require('../middleware/errorMessage');
 
-const { addProduct } = require('../middleware/validator');
+const validoator = require('../middleware/validator');
 
-const productDao = require('../models/productDao');
+const Product = require('../service/product');
 
 module.exports = {
   // 获取商品列表
   async list(ctx) {
-    let productData = await productDao.list();
-    if (productData) {
-      ctx.body = successMsg(productData, '获取成功');
+    let params = ctx.query;
+    try {
+      let result = await Product.list((parseInt(params.page) - 1) * parseInt(params.limit), parseInt(params.limit), params.keywords);
+      ctx.body = result;
+      return
+      if (result) {
+        ctx.body = successMsg('获取成功', result);
+      }
+    } catch (err) {
+      ctx.body = errorMsg('获取失败', err);
     }
   },
 
@@ -28,23 +35,19 @@ module.exports = {
    */
   async add(ctx) {
     let params = ctx.request.body;
-    let error = addProduct(params);
+    let error = validoator.addProduct(params);
     console.log('error', error);
     if (Object.keys(error) != 0) {
-      ctx.body = {
-        code: 400,
-        msg: error.msg
-      };
+      ctx.body = errorMsg(error.msg);
       return
-    } else {
-      ctx.body = ctx;
     }
 
     // 添加商品
     try {
-      let val = await productDao.addProduct(params);
-      if (val.affectedRows === 1) {
-        ctx.body = addSuccess();
+      let val = await Product.add(params);
+
+      if (val) {
+        ctx.body = successMsg('添加成功');
       }
     } catch (error) {
       ctx.body = errorMsg(400, error, '添加失败');
@@ -59,18 +62,18 @@ module.exports = {
    */
 
   async detail(ctx) {
-    let { productId } = ctx.query;
-    if (!productId) {
+    let { id } = ctx.query;
+    if (!id) {
       ctx.body = (400, '', '商品id不能为空');
       return
     }
 
-    let data = await productDao.detail(productId);
-    if (!data.length) {
+    let data = await Product.detail(id);
+    if (!data) {
       ctx.body = errorMsg(400, '', '商品id不能为空');
       return
     }
-    ctx.body = getSucccess(data);
+    ctx.body = successMsg('获取成功', data);
   },
 
 
@@ -80,39 +83,30 @@ module.exports = {
    * @return {*}
    */
   async delete(ctx) {
-    let { productId } = ctx.request.body;
-    if (!productId) {
-      ctx.body = errorMsg(400, '', '商品id不能为空');
+    let { id } = ctx.request.body;
+    if (!id) {
+      ctx.body = errorMsg('商品id不能为空');
       return
     }
 
-    let val = await productDao.detail(productId);
-    if (!val.length) {
-      ctx.body = errorMsg(400, '', '不存在此商品');
-      return
-    }
+
 
     try {
-      let data = await productDao.delete(productId);
-      if (data.affectedRows === 1) {
-        ctx.body = addSuccess('删除成功');
+      // 查询商品是否存在
+      let val = await Product.detail(id);
+      if (!val) {
+        ctx.body = errorMsg('不存在此商品');
+        return
       }
-    } catch (error) {
-      ctx.body = errorMsg(400, error, '删除失败');
+
+      // 删除商品
+      let data = await Product.delete(id);
+      ctx.body = data;
+      if (data) {
+        ctx.body = successMsg('删除成功');
+      }
+    } catch (err) {
+      ctx.body = errorMsg('删除失败', err);
     }
   },
-
-
-  // 查询
-  async search(ctx) {
-    let { productName } = ctx.query;
-
-    try {
-      let list = await productDao.search(productName);
-      ctx.body = getSucccess(list, '查询成功');
-    } catch (error) {
-      ctx.body = errorMsg(400, error, '查询失败');
-    }
-
-  }
 }

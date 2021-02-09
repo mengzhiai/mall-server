@@ -2,20 +2,20 @@
  * @Date: 2021-01-05 00:16:32
  * @Description: 用户信息
  * @LastEditors: jun
- * @LastEditTime: 2021-02-08 00:44:01
+ * @LastEditTime: 2021-02-10 00:40:15
  * @FilePath: \mall-server\app\controller\userController.js
  */
-// const userDao = require('../models/user');
+const { errorMsg, addSuccess, successMsg, getSucccess } = require('../middleware/errorMessage');
+
 
 const jwt = require('jsonwebtoken')
 const secret = 'secret';
 
-const User = require('../models/user')
+const User = require('../service/user')
 module.exports = {
 
   // 登录
   async login(ctx) {
-    let params = ctx.request.body;
     let { userName, password } = ctx.request.body;
     ctx.session.userName = 'Tom';
     if (!userName || !password) {
@@ -26,20 +26,16 @@ module.exports = {
       return
     }
 
-    // 查找用户名和密码是否存在
-    let result = await User.findAll({
-      where: {
-        userName: userName,
-        password: password
-      }
-    });
 
-    if (!result.length) {
-      ctx.body = {
-        code: 422,
-        msg: '用户名或密码错误'
+
+    try {
+      let result = await User.login(userName, password);
+      if (!result) {
+        ctx.body = errorMsg('用户名或者密码错误');
+        return
       }
-    } else {
+
+      // session中保存token
       const token = jwt.sign({
         name: userName,
         _id: password
@@ -47,47 +43,48 @@ module.exports = {
       // session保存token
       ctx.session.token = token;
       // 保存userId
-      ctx.session.userId = result[0].id;
+      ctx.session.userId = result.id;
 
-      ctx.body = {
-        code: 200,
-        data: token,
-        msg: '登录成功'
-      }
+      ctx.body = successMsg('登录成功', token);
+    } catch (err) {
+      ctx.body = errorMsg('登录失败', err)
     }
   },
 
   // 获取用户列表
-  getList: async ctx => {
-    let params = ctx.quyery;
-    return ctx.body = {
-      code: 200,
-      data: ctx.session,
-      userName: ctx.session.userName,
-      msg: '获取成功'
-    }
+  async getList(ctx) {
+    let params = ctx.query;
+    let result = await User.list((parseInt(params.page) - 1) * parseInt(params.limit), parseInt(params.limit));
+    return ctx.body = successMsg('获取成功', result);
   },
 
 
   // 注册
   register: async ctx => {
-    console.log('ctx', ctx.request.body);
     let { userName, password } = ctx.request.body;
-    const user = await userDao.findUserName(userName);
 
-    if (userName && password) {
-      let val = await user.registerController(userName, password);
-      if (val.affectedRows == 1) {
-        ctx.body = {
-          data: 200,
-          msg: '注册成功'
-        }
+    if (!userName || !password) {
+      ctx.body = errorMsg('用户名或密码不能为空');
+      return
+    }
+
+    try {
+      // 查询用户是否存在
+      const user = await User.search(userName);
+      if(user) {
+        ctx.body = errorMsg('当前用户已存在,请登录');
+        return
       }
-    } else {
-      ctx.body = {
-        code: 422,
-        msg: '请输入用户名和密码'
+
+      // 注册
+      let result = await User.register(userName, password);
+      if(!result) {
+        ctx.body = errorMsg('注册失败');
+        return
       }
+      ctx.body = successMsg('注册成功');
+    } catch (err) {
+      ctx.body = ('注册失败', err);
     }
   }
 }

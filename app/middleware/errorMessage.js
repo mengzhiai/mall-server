@@ -2,7 +2,7 @@
  * @Date: 2021-01-27 23:41:39
  * @Description: 公用返回值
  * @LastEditors: jun
- * @LastEditTime: 2021-02-01 22:52:48
+ * @LastEditTime: 2021-02-10 01:16:48
  * @FilePath: \mall-server\app\middleware\errorMessage.js
  */
 
@@ -27,10 +27,9 @@ module.exports = {
     return obj;
   },
 
-  // 返回失败
-  errorMsg(code, data, msg = '') {
+  errorMsg(msg, data) {
     let obj = {
-      code: code,
+      code: 422,
       msg: msg
     }
     if (data) {
@@ -39,7 +38,7 @@ module.exports = {
     return obj;
   },
 
-  successMsg(data, msg = '获取成功') {
+  successMsg( msg, data = '') {
     let obj = {
       code: 200,
       msg: msg
