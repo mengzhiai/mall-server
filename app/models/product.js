@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:26:20
  * @Description: 商品列表
  * @LastEditors: jun
- * @LastEditTime: 2021-02-10 01:34:13
+ * @LastEditTime: 2021-02-14 15:43:38
  * @FilePath: \mall-server\app\models\product.js
  */
 
@@ -10,12 +10,12 @@ const Sequelize = require('sequelize');
 const sequelize = require('../../config/db');
 const User = sequelize.define( "product",
   {
-    productId: {
+    id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       primaryKey: true
     },
-    categoryId: {
+    category: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
@@ -30,6 +30,12 @@ const User = sequelize.define( "product",
     productDesc: {
       type: Sequelize.STRING,
       defaultValue: ''
+    },
+    amount: {
+      type: Sequelize.INTEGER,
+    },
+    status: {
+      type: Sequelize.INTEGER,
     },
     img: {
       type: Sequelize.STRING,

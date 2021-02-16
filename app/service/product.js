@@ -2,7 +2,7 @@
  * @Date: 2021-02-10 00:47:59
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-02-10 01:33:17
+ * @LastEditTime: 2021-02-15 14:46:28
  * @FilePath: \mall-server\app\service\product.js
  */
 const { add } = require("../controller/productController");
@@ -10,14 +10,14 @@ const Product = require("../models/product");
 const { Op } = require("sequelize");
 
 module.exports = {
-  async list(page, limit, keywords) {
+  async list(keywords, page, limit) {
     return await Product.findAndCountAll({
       where: {
         productName: {
           [Op.like]: `${keywords}%` || ''
         }
       },
-      offect: page,
+      offset: page,
       limit: limit
     })
   },
@@ -32,7 +32,16 @@ module.exports = {
   async detail(id) {
     return await Product.findOne({
       where: {
-        productId: id
+        id: id
+      }
+    })
+  },
+
+  // 更新
+  async update(params) {
+    return await Product.update(params, {
+      where: {
+        id:params.id
       }
     })
   },
@@ -41,7 +50,7 @@ module.exports = {
   async delete(id) {
     return await Product.destroy({
       where: {
-        productId: id
+        id: id
       }
     })
   }

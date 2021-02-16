@@ -2,7 +2,7 @@
  * @Date: 2021-01-14 23:39:53
  * @Description: token检查
  * @LastEditors: jun
- * @LastEditTime: 2021-01-28 00:47:32
+ * @LastEditTime: 2021-02-13 21:46:24
  * @FilePath: \mall-server\app\middleware\tokenCheck.js
  */
 
@@ -19,7 +19,8 @@ const tokenCheck = function () {
     // 获取session中的token
     let sessionToken = ctx.session.token;
     // 获取headers中携带的token
-    let headerToken = ctx.headers.authorization;
+    // console.log('ctx.headers', ctx.headers);
+    let headerToken = ctx.headers.token;
     let token = '';
     if (headerToken) {
       token = headerToken.split(' ')[1]

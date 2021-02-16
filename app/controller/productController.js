@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:07:15
  * @Description: 商品管理
  * @LastEditors: jun
- * @LastEditTime: 2021-02-10 01:32:34
+ * @LastEditTime: 2021-02-15 15:33:04
  * @FilePath: \mall-server\app\controller\productController.js
  */
 
@@ -16,15 +16,15 @@ module.exports = {
   // 获取商品列表
   async list(ctx) {
     let params = ctx.query;
+    // ctx.body = params;
+    // return
     try {
-      let result = await Product.list((parseInt(params.page) - 1) * parseInt(params.limit), parseInt(params.limit), params.keywords);
-      ctx.body = result;
-      return
+      let result = await Product.list(params.keywords, (parseInt(params.page) - 1) * parseInt(params.limit), parseInt(params.limit));
       if (result) {
         ctx.body = successMsg('获取成功', result);
       }
     } catch (err) {
-      ctx.body = errorMsg('获取失败', err);
+      ctx.body = errorMsg('获取失败', err.errors[0].message);
     }
   },
 
@@ -74,6 +74,26 @@ module.exports = {
       return
     }
     ctx.body = successMsg('获取成功', data);
+  },
+
+
+
+  /**
+   * @description: 更新
+   * @param {*}
+   * @return {*}
+   */
+  async update(ctx) {
+    let params = ctx.request.body;
+    try {
+      let result = await Product.update(params);
+      if (result.length) {
+        ctx.body = successMsg('更新成功');
+      }
+    } catch (err) {
+      ctx.body = errorMsg('更新失败', err);
+    }
+
   },
 
 

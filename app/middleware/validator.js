@@ -2,7 +2,7 @@
  * @Date: 2021-01-27 22:30:43
  * @Description: 验证参数
  * @LastEditors: jun
- * @LastEditTime: 2021-01-31 22:58:33
+ * @LastEditTime: 2021-02-15 15:26:43
  * @FilePath: \mall-server\app\middleware\validator.js
  */
 
@@ -27,6 +27,7 @@ module.exports = {
 
   // 添加商品
   addProduct(params) {
+    console.log('params', params);
     let error = {};
     // 商品名称是否为空
     if(!params.productName || validator.isEmpty(params.productName)) {
@@ -35,10 +36,10 @@ module.exports = {
     }
 
     // 商品分类
-    if(!params.categoryId || validator.isEmpty(params.categoryId)) {
+    if(!params.category || validator.isEmpty(params.category)) {
       error.msg = '商品分类不能为空';
       return error;
-    } else if(params.categoryId < 1 || params.categoryId > 5){
+    } else if(params.category < 1 || params.category > 5){
       error.msg = '商品分类信息错误';
       return error;
     }
