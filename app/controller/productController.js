@@ -2,30 +2,38 @@
  * @Date: 2021-01-25 23:07:15
  * @Description: 商品管理
  * @LastEditors: jun
- * @LastEditTime: 2021-02-15 15:33:04
+ * @LastEditTime: 2021-02-18 01:05:17
  * @FilePath: \mall-server\app\controller\productController.js
  */
 
 const { errorMsg, successMsg } = require('../middleware/errorMessage');
 
-const validoator = require('../middleware/validator');
+const validoatorTool = require('../middleware/validator');
 
 const Product = require('../service/product');
+
+const { ParameterException } = require('../middleware/httpException');
 
 module.exports = {
   // 获取商品列表
   async list(ctx) {
     let params = ctx.query;
-    // ctx.body = params;
-    // return
-    try {
+    if (!params.page || !params.limit) {
+      const error = new ParameterException();
+      throw error;
+    }
+    let result = await Product.list(params.keywords, (parseInt(params.page) - 1) * parseInt(params.limit), parseInt(params.limit));
+    if (result) {
+      ctx.body = successMsg('获取成功', result);
+    }
+    /* try {
       let result = await Product.list(params.keywords, (parseInt(params.page) - 1) * parseInt(params.limit), parseInt(params.limit));
       if (result) {
         ctx.body = successMsg('获取成功', result);
       }
     } catch (err) {
       ctx.body = errorMsg('获取失败', err.errors[0].message);
-    }
+    } */
   },
 
   /**
@@ -35,23 +43,23 @@ module.exports = {
    */
   async add(ctx) {
     let params = ctx.request.body;
-    let error = validoator.addProduct(params);
-    console.log('error', error);
-    if (Object.keys(error) != 0) {
-      ctx.body = errorMsg(error.msg);
-      return
+    // 验证字段
+    validoatorTool.addProduct(params);
+    let val = await Product.add(params);
+    if (val) {
+      ctx.body = successMsg('添加成功');
     }
 
     // 添加商品
-    try {
+    /* try {
       let val = await Product.add(params);
 
       if (val) {
         ctx.body = successMsg('添加成功');
       }
     } catch (error) {
-      ctx.body = errorMsg(400, error, '添加失败');
-    }
+      ctx.body = errorMsg('添加失败', error.errors[0].message);
+    } */
   },
 
 

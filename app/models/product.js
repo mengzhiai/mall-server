@@ -2,13 +2,13 @@
  * @Date: 2021-01-25 23:26:20
  * @Description: 商品列表
  * @LastEditors: jun
- * @LastEditTime: 2021-02-14 15:43:38
+ * @LastEditTime: 2021-02-18 01:04:42
  * @FilePath: \mall-server\app\models\product.js
  */
 
 const Sequelize = require('sequelize');
 const sequelize = require('../../config/db');
-const User = sequelize.define( "product",
+const User = sequelize.define("product",
   {
     id: {
       type: Sequelize.INTEGER,
@@ -18,14 +18,29 @@ const User = sequelize.define( "product",
     category: {
       type: Sequelize.INTEGER,
       allowNull: false,
+      validate: {
+        min: {
+          args: 1,
+          msg: '分类信息有误'
+        },
+        max: {
+          args: 5,
+          msg: '分类信息有误'
+        }
+      }
     },
     productName: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: false
     },
     productPrice: {
       type: Sequelize.DECIMAL,
       allowNull: false,
+      validate: {
+        isNumeric: {
+          msg: '商品价格必须为数字'
+        }
+      }
     },
     productDesc: {
       type: Sequelize.STRING,

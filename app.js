@@ -2,7 +2,7 @@
  * @Date: 2020-12-24 22:41:34
  * @Description: app.js
  * @LastEditors: jun
- * @LastEditTime: 2021-02-07 22:13:29
+ * @LastEditTime: 2021-02-17 15:26:44
  * @FilePath: \mall-server\app.js
  */
 const Koa = require('koa2');
@@ -19,6 +19,10 @@ const koajwt = require('koa-jwt');
 
 const session = require('koa-session');
 
+
+// 引入自定义异常中间件
+const catchError = require('./app/middleware/catchError');
+
 // 配置静态资源加载中间件
 app.use(koaStatic(
   path.join(__dirname, './public')
@@ -27,6 +31,7 @@ app.use(koaStatic(
 // 请求体中间件
 app.use(koaBody());
 
+app.use(catchError);
 
 // token检查
 const tokenCheck = require('./app/middleware/tokenCheck');
