@@ -2,7 +2,7 @@
  * @Date: 2021-02-17 15:23:10
  * @Description: 全局异常处理
  * @LastEditors: jun
- * @LastEditTime: 2021-02-18 01:04:22
+ * @LastEditTime: 2021-02-20 23:37:28
  * @FilePath: \mall-server\app\middleware\catchError.js
  */
 const { HttpException } =  require('./httpException');
@@ -20,7 +20,7 @@ const catchError = async (ctx, next) => {
     } else {
       let message = '服务器错误,请联系管理员';
       let errorCode = 500;
-      if(error.errors.length > 0) {
+      if(error.errors && error.errors.length > 0) {
         message = error.errors[0].message;
         errorCode = 400;
       }
