@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:07:15
  * @Description: 商品管理
  * @LastEditors: jun
- * @LastEditTime: 2021-02-18 01:05:17
+ * @LastEditTime: 2021-02-21 23:15:12
  * @FilePath: \mall-server\app\controller\productController.js
  */
 
@@ -26,14 +26,6 @@ module.exports = {
     if (result) {
       ctx.body = successMsg('获取成功', result);
     }
-    /* try {
-      let result = await Product.list(params.keywords, (parseInt(params.page) - 1) * parseInt(params.limit), parseInt(params.limit));
-      if (result) {
-        ctx.body = successMsg('获取成功', result);
-      }
-    } catch (err) {
-      ctx.body = errorMsg('获取失败', err.errors[0].message);
-    } */
   },
 
   /**
@@ -49,17 +41,6 @@ module.exports = {
     if (val) {
       ctx.body = successMsg('添加成功');
     }
-
-    // 添加商品
-    /* try {
-      let val = await Product.add(params);
-
-      if (val) {
-        ctx.body = successMsg('添加成功');
-      }
-    } catch (error) {
-      ctx.body = errorMsg('添加失败', error.errors[0].message);
-    } */
   },
 
 
@@ -117,8 +98,6 @@ module.exports = {
       return
     }
 
-
-
     try {
       // 查询商品是否存在
       let val = await Product.detail(id);
@@ -137,4 +116,11 @@ module.exports = {
       ctx.body = errorMsg('删除失败', err);
     }
   },
+
+
+  /* --商品分类-- */
+  async classify(ctx) {
+    let params = ctx.query;
+    // let result = await Product.list(params.keywords, (parseInt(params.page) - 1) * parseInt(params.limit), parseInt(params.limit));
+  }
 }

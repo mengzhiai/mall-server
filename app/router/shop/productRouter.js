@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:04:51
  * @Description: 商品管理
  * @LastEditors: jun
- * @LastEditTime: 2021-02-15 15:12:24
+ * @LastEditTime: 2021-02-21 21:27:44
  * @FilePath: \mall-server\app\router\shop\productRouter.js
  */
 const Router = require('koa-router');
@@ -22,8 +22,11 @@ productRouter.get('/detail', productController.detail);
 // 更新商品
 productRouter.post('/update', productController.update);
 
-
 // 删除商品
 productRouter.post('/delete', productController.delete);
+
+
+/* --商品分类-- */
+productRouter.get('/classify', productController.classify)
 
 module.exports = productRouter;

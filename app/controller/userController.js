@@ -2,16 +2,16 @@
  * @Date: 2021-01-05 00:16:32
  * @Description: 用户信息
  * @LastEditors: jun
- * @LastEditTime: 2021-02-10 00:40:15
+ * @LastEditTime: 2021-02-21 14:37:04
  * @FilePath: \mall-server\app\controller\userController.js
  */
-const { errorMsg, addSuccess, successMsg, getSucccess } = require('../middleware/errorMessage');
+const { errorMsg, successMsg } = require('../middleware/errorMessage');
 
 
 const jwt = require('jsonwebtoken')
 const secret = 'secret';
 
-const User = require('../service/user')
+const User = require('../service/user');
 module.exports = {
 
   // 登录
