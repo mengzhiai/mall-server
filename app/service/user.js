@@ -2,7 +2,7 @@
  * @Date: 2021-02-09 23:28:56
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-02-10 00:39:56
+ * @LastEditTime: 2021-03-06 15:09:35
  * @FilePath: \mall-server\app\service\user.js
  */
 const User = require("../models/User");

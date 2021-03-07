@@ -2,7 +2,7 @@
  * @Date: 2020-12-24 23:49:17
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-02-08 00:26:09
+ * @LastEditTime: 2021-03-06 21:39:41
  * @FilePath: \mall-server\config\db.js
  */
 /* var mysql = require('mysql');
@@ -58,11 +58,11 @@ const sequelize = new Sequelize('mall_db','root','458677',{
         bigNumberStrings: true
     },
     define: {
-      timestamps: false, // 是否自动创建时间字段， 默认会自动创建createdAt、updatedAt
+      timestamps: true, // 是否自动创建时间字段， 默认会自动创建createdAt、updatedAt
       paranoid: true, // 是否自动创建deletedAt字段
-      createdAt: "create_time", // 重命名字段
-      updatedAt: "update_time",
-      deletedAt: "delete_time",
+      createdAt: "createTime", // 重命名字段
+      updatedAt: "updateTime",
+      deletedAt: "deleteTime",
       underscored: true, // 开启下划线命名方式，默认是驼峰命名
       freezeTableName: true
     },

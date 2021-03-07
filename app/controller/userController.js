@@ -2,7 +2,7 @@
  * @Date: 2021-01-05 00:16:32
  * @Description: 用户信息
  * @LastEditors: jun
- * @LastEditTime: 2021-02-21 14:37:04
+ * @LastEditTime: 2021-03-07 10:39:55
  * @FilePath: \mall-server\app\controller\userController.js
  */
 const { errorMsg, successMsg } = require('../middleware/errorMessage');
@@ -39,7 +39,7 @@ module.exports = {
       const token = jwt.sign({
         name: userName,
         _id: password
-      }, 'token', { expiresIn: '2h' });
+      }, 'token', { expiresIn: 1 });
       // session保存token
       ctx.session.token = token;
       // 保存userId

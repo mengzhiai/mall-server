@@ -2,7 +2,7 @@
  * @Date: 2021-01-05 00:23:22
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-02-21 21:15:35
+ * @LastEditTime: 2021-03-06 15:15:19
  * @FilePath: \mall-server\app\models\user.js
  */
 const bcrypt = require('bcryptjs');
