@@ -1,15 +1,17 @@
 /*
  * @Date: 2021-02-10 00:47:59
- * @Description: 
+ * @Description: 商品列表
  * @LastEditors: jun
- * @LastEditTime: 2021-02-15 14:46:28
+ * @LastEditTime: 2021-03-11 00:57:12
  * @FilePath: \mall-server\app\service\product.js
  */
 const { add } = require("../controller/productController");
-const Product = require("../models/product");
+const { Product, Classify } = require("../models/product");
 const { Op } = require("sequelize");
 
-module.exports = {
+// 产品列表
+const Goods = {
+  // 获取列表
   async list(keywords, page, limit) {
     return await Product.findAndCountAll({
       where: {
@@ -22,11 +24,11 @@ module.exports = {
     })
   },
 
+
   // 添加
   async add(params) {
     return await Product.create(params);
   },
-
 
   // 详情
   async detail(id) {
@@ -41,7 +43,7 @@ module.exports = {
   async update(params) {
     return await Product.update(params, {
       where: {
-        id:params.id
+        id: params.id
       }
     })
   },
@@ -54,4 +56,31 @@ module.exports = {
       }
     })
   }
-};
+}
+
+
+const Category = {
+  async list(keywords, page, limit) {
+    return await Classify.findAndCountAll({
+      where: {
+        name: {
+          [Op.like]: `${keywords}%` || ''
+        }
+      },
+      offset: page,
+      limit: limit
+    })
+  },
+
+
+  // 添加分类
+  // 添加
+  async add(params) {
+    return await Classify.create(params);
+  },
+}
+
+module.exports = {
+  Goods,
+  Category
+}
