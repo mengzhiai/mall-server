@@ -2,7 +2,7 @@
  * @Date: 2021-02-17 15:23:10
  * @Description: 全局异常处理
  * @LastEditors: jun
- * @LastEditTime: 2021-02-20 23:37:28
+ * @LastEditTime: 2021-03-13 21:22:59
  * @FilePath: \mall-server\app\middleware\catchError.js
  */
 const { HttpException } =  require('./httpException');
@@ -26,6 +26,7 @@ const catchError = async (ctx, next) => {
       }
       ctx.body = {
         msg: message,
+        data: error,
         code: errorCode,
         request: `${ctx.method} ${ctx.path}`
       }

@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:26:20
  * @Description: 商品列表
  * @LastEditors: jun
- * @LastEditTime: 2021-03-13 14:41:33
+ * @LastEditTime: 2021-03-13 22:39:51
  * @FilePath: \mall-server\app\models\product.js
  */
 
@@ -74,7 +74,7 @@ Product.init({
   }
 }, {
   sequelize,
-  timestamps: false,//禁用时间戳
+  // timestamps: false,//禁用时间戳
   tableName: "product",//明确定义表名
 });
 

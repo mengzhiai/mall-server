@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:07:15
  * @Description: 商品管理
  * @LastEditors: jun
- * @LastEditTime: 2021-03-13 14:01:44
+ * @LastEditTime: 2021-03-13 22:51:57
  * @FilePath: \mall-server\app\controller\productController.js
  */
 
@@ -126,6 +126,7 @@ const classifyController = {
   async list(ctx) {
     let params = ctx.query;
     let result = await Category.list(params.keywords, (parseInt(params.page) - 1) * parseInt(params.limit), parseInt(params.limit));
+    // let result = await Category.list();
     if (result) {
       ctx.body = successMsg('获取成功', result);
     }

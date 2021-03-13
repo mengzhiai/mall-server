@@ -2,12 +2,15 @@
  * @Date: 2021-02-10 00:47:59
  * @Description: 商品列表
  * @LastEditors: jun
- * @LastEditTime: 2021-03-13 14:59:42
+ * @LastEditTime: 2021-03-13 22:59:35
  * @FilePath: \mall-server\app\service\product.js
  */
-const { add } = require("../controller/productController");
-const { Product, Classify } = require("../models/product");
+const { Classify, Product } = require("../models/product");
 const { Op } = require("sequelize");
+
+
+Classify.hasMany(Product, {foreignKey: 'category', sourceKey: 'id', as: 'list'});
+Product.belongsTo(Classify);
 
 // 产品列表
 const Goods = {
@@ -62,8 +65,9 @@ const Goods = {
 
 
 // 
-// Classify.hasMany(Product, {foreignKey: 'id', sourceKey: 'category', as: 'classifyList'});
+// Classify.hasMany(Product, {foreignKey: 'category', sourceKey: 'id', as: 'classifyList'});
 // Product.belongsTo(Classify);
+
 const Category = {
   // 分类列表
 
@@ -76,7 +80,8 @@ const Category = {
       },
       offset: page,
       limit: limit,
-      // include: 'classifyList'
+      include: 'list',
+      distinct: true,
     })
   },
 
