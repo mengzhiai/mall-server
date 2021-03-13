@@ -2,7 +2,7 @@
  * @Date: 2020-12-24 23:49:17
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-03-06 21:39:41
+ * @LastEditTime: 2021-03-13 11:13:41
  * @FilePath: \mall-server\config\db.js
  */
 /* var mysql = require('mysql');
@@ -72,7 +72,11 @@ const sequelize = new Sequelize('mall_db','root','458677',{
         acquire: 30000,
         idle: 10000
     },
-    timezone: '+08:00'  //东八时区
+    timezone: '+08:00',  //东八时区
+    dialectOptions: {
+      dateStrings: true,
+      typeCast: true
+    }
 })
 
 sequelize.sync({

@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:26:20
  * @Description: 商品列表
  * @LastEditors: jun
- * @LastEditTime: 2021-03-10 23:40:49
+ * @LastEditTime: 2021-03-13 14:41:33
  * @FilePath: \mall-server\app\models\product.js
  */
 
@@ -16,6 +16,7 @@ class Product extends Model {
 class Classify extends Model {
 
 };
+
 
 // 商品列表
 Product.init({

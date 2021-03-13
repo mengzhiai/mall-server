@@ -2,7 +2,7 @@
  * @Date: 2021-02-10 00:47:59
  * @Description: 商品列表
  * @LastEditors: jun
- * @LastEditTime: 2021-03-11 00:57:12
+ * @LastEditTime: 2021-03-13 14:59:42
  * @FilePath: \mall-server\app\service\product.js
  */
 const { add } = require("../controller/productController");
@@ -59,7 +59,14 @@ const Goods = {
 }
 
 
+
+
+// 
+// Classify.hasMany(Product, {foreignKey: 'id', sourceKey: 'category', as: 'classifyList'});
+// Product.belongsTo(Classify);
 const Category = {
+  // 分类列表
+
   async list(keywords, page, limit) {
     return await Classify.findAndCountAll({
       where: {
@@ -68,16 +75,26 @@ const Category = {
         }
       },
       offset: page,
-      limit: limit
+      limit: limit,
+      // include: 'classifyList'
     })
   },
 
 
-  // 添加分类
   // 添加
   async add(params) {
     return await Classify.create(params);
   },
+
+
+  // 商品列表
+  async goodsList(id) {
+    return await Product.findAll({
+      where: {
+        category:id
+      }
+    })
+  }
 }
 
 module.exports = {

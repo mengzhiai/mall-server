@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:07:15
  * @Description: 商品管理
  * @LastEditors: jun
- * @LastEditTime: 2021-03-11 00:52:28
+ * @LastEditTime: 2021-03-13 14:01:44
  * @FilePath: \mall-server\app\controller\productController.js
  */
 
@@ -15,7 +15,8 @@ const { Goods, Category } = require('../service/product');
 
 const { ParameterException } = require('../middleware/httpException');
 
-module.exports = {
+// 商品列表
+const productController = {
   // 获取商品列表
   async list(ctx) {
     let params = ctx.query;
@@ -117,11 +118,12 @@ module.exports = {
       ctx.body = errorMsg('删除失败', err);
     }
   },
+}
 
-
-  /* ------------商品分类--------------- */
+/* ------------商品分类--------------- */
+const classifyController = {
   // 分类列表
-  async classify(ctx) {
+  async list(ctx) {
     let params = ctx.query;
     let result = await Category.list(params.keywords, (parseInt(params.page) - 1) * parseInt(params.limit), parseInt(params.limit));
     if (result) {
@@ -130,11 +132,26 @@ module.exports = {
   },
 
   // 添加分类
-  async addClassify(ctx) {
+  async add(ctx) {
     let params = ctx.request.body;
     let result = await Category.add(params);
     if (result) {
       ctx.body = successMsg('添加成功');
     }
   },
+
+  // 分类下的商品列表
+  async goodsList(ctx) {
+    let params = ctx.query;
+    let result = await Category.goodsList(params.id);
+    if(result) {
+      ctx.body = successMsg('获取成功', result);
+    }
+  }
+}
+
+
+module.exports = {
+  productController,
+  classifyController
 }
