@@ -2,7 +2,7 @@
  * @Date: 2020-12-24 22:41:34
  * @Description: app.js
  * @LastEditors: jun
- * @LastEditTime: 2021-02-20 23:33:03
+ * @LastEditTime: 2021-03-23 23:59:34
  * @FilePath: \mall-server\app.js
  */
 const Koa = require('koa2');
@@ -29,17 +29,17 @@ app.use(koaStatic(
 ))
 
 // 请求体中间件
-// app.use(koaBody());
-app.use(koaBody({
-  multipart: true,
-  formidable: {
-    // 上传目录
-    uploadDir: path.join(__dirname, './static'),
-    // 保留文件扩展名
-    keepExtensions: true,
-    maxFileSize: 200 * 1024 * 1024    // 设置上传文件大小最大限制，默认2M
-  }
-}));
+app.use(koaBody());
+// app.use(koaBody({
+//   multipart: true,
+//   formidable: {
+//     // 上传目录
+//     uploadDir: path.join(__dirname, './static'),
+//     // 保留文件扩展名
+//     keepExtensions: true,
+//     maxFileSize: 200 * 1024 * 1024    // 设置上传文件大小最大限制，默认2M
+//   }
+// }));
 
 app.use(catchError);
 

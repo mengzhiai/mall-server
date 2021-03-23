@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:07:15
  * @Description: 商品管理
  * @LastEditors: jun
- * @LastEditTime: 2021-03-13 22:51:57
+ * @LastEditTime: 2021-03-20 21:43:01
  * @FilePath: \mall-server\app\controller\productController.js
  */
 
@@ -23,6 +23,9 @@ const productController = {
     if (!params.page || !params.limit) {
       const error = new ParameterException();
       throw error;
+    }
+    if(!params.keywords) {
+      params.keywords = '';
     }
     let result = await Goods.list(params.keywords, (parseInt(params.page) - 1) * parseInt(params.limit), parseInt(params.limit));
     if (result) {

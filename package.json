@@ -25,5 +25,8 @@
     "pm2": "^4.5.5",
     "sequelize": "^6.5.0",
     "validator": "^13.5.2"
+  },
+  "devDependencies": {
+    "qiniu": "^7.3.2"
   }
 }

@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:26:20
  * @Description: 商品列表
  * @LastEditors: jun
- * @LastEditTime: 2021-03-13 22:39:51
+ * @LastEditTime: 2021-03-20 21:09:07
  * @FilePath: \mall-server\app\models\product.js
  */
 
@@ -71,6 +71,7 @@ Product.init({
   },
   isNew: {
     type: Sequelize.INTEGER,
+    defaultValue: 2
   }
 }, {
   sequelize,
