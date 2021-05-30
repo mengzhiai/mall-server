@@ -18,6 +18,8 @@ class Classify extends Model {
 };
 
 
+
+
 // 商品列表
 Product.init({
   id: {
@@ -95,6 +97,11 @@ Classify.init({
   // timestamps: false,//禁用时间戳
   tableName: 'classify',//明确定义表名
 })
+
+
+Classify.hasMany(Product, {foreignKey: 'category', sourceKey: 'id', as: 'list'});
+Product.belongsTo(Classify);
+
 
 module.exports = {
   Product,

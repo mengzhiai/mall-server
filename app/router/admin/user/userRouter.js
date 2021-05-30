@@ -9,7 +9,7 @@
 const Router = require('koa-router');
 let userRouter = new Router({prefix: '/user'});
 
-let user = require('../../controller/userController')
+let user = require('../../../controller/admin/userController')
 
 // 登录
 userRouter.post('/login', user.login);

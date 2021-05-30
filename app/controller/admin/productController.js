@@ -6,14 +6,14 @@
  * @FilePath: \mall-server\app\controller\productController.js
  */
 
-const { errorMsg, successMsg } = require('../middleware/errorMessage');
+const { errorMsg, successMsg } = require('../../middleware/errorMessage');
 
-const validoatorTool = require('../middleware/validator');
+const validoatorTool = require('../../middleware/validator');
 
 // 产品管理
-const { Goods, Category } = require('../service/product');
+const { Goods, Category } = require('../../service/product');
 
-const { ParameterException } = require('../middleware/httpException');
+const { ParameterException } = require('../../middleware/httpException');
 
 // 商品列表
 const productController = {

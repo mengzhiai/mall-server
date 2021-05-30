@@ -8,7 +8,7 @@
 const Router = require('koa-router');
 let commonRouter = new Router({prefix: '/public'});
 
-const commonController = require('../controller/commonController');
+const commonController = require('../../controller/admin/commonController');
 
 
 // 更新商品

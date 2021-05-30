@@ -9,8 +9,8 @@ const { Classify, Product } = require("../models/product");
 const { Op } = require("sequelize");
 
 
-Classify.hasMany(Product, {foreignKey: 'category', sourceKey: 'id', as: 'list'});
-Product.belongsTo(Classify);
+/* Classify.hasMany(Product, {foreignKey: 'category', sourceKey: 'id', as: 'list'});
+Product.belongsTo(Classify); */
 
 // 产品列表
 const Goods = {

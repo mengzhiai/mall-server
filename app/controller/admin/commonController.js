@@ -12,13 +12,13 @@ const path = require('path')
 
 let fs = require("fs");
 
-const { errorMsg, successMsg } = require('../middleware/errorMessage');
+const { errorMsg, successMsg } = require('../../middleware/errorMessage');
 
-const validoatorTool = require('../middleware/validator');
+const validoatorTool = require('../../middleware/validator');
 
-const Product = require('../service/product');
+const Product = require('../../service/product');
 
-const { ParameterException } = require('../middleware/httpException');
+const { ParameterException } = require('../../middleware/httpException');
 
 //要上传的空间名
 const bucket = 'azm'; 

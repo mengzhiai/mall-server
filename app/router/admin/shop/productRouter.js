@@ -9,7 +9,7 @@ const Router = require('koa-router');
 let productRouter = new Router({prefix: '/product'});
 let classifyRouter = new Router({prefix: '/classify'});
 
-const {productController, classifyController} = require('../../controller/productController');
+const {productController, classifyController} = require('../../../controller/admin/productController');
 
 // 获取商品列表
 productRouter.get('/list', productController.list);

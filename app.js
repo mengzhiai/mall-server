@@ -63,7 +63,7 @@ app.use(session(CONFIG, app));
 
 
 // 使用路由中间件
-const routers = require('./app/router');
+const routers = require('./app/router/index');
 app.use(routers.routes()).use(routers.allowedMethods());
 
 

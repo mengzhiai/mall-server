@@ -5,13 +5,13 @@
  * @LastEditTime: 2021-03-07 10:39:55
  * @FilePath: \mall-server\app\controller\userController.js
  */
-const { errorMsg, successMsg } = require('../middleware/errorMessage');
+const { errorMsg, successMsg } = require('../../middleware/errorMessage');
 
 
 const jwt = require('jsonwebtoken')
 const secret = 'secret';
 
-const User = require('../service/user');
+const User = require('../../service/user');
 module.exports = {
 
   // 登录
