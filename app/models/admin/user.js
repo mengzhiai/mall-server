@@ -2,15 +2,15 @@
  * @Date: 2021-01-05 00:23:22
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-03-06 15:15:19
- * @FilePath: \mall-server\app\models\user.js
+ * @LastEditTime: 2021-06-05 16:38:51
+ * @FilePath: \mall-server\app\models\admin\user.js
  */
 const bcrypt = require('bcryptjs');
 
 const { Sequelize, Model } = require('sequelize');
-const sequelize = require('../../config/db');
+const sequelize = require('../../../config/db');
 
-const { ParameterException } = require('../middleware/httpException');
+const { ParameterException } = require('../../middleware/httpException');
 
 /* const User = sequelize.define( "user",
   {

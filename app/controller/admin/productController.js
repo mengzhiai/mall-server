@@ -2,8 +2,8 @@
  * @Date: 2021-01-25 23:07:15
  * @Description: 商品管理
  * @LastEditors: jun
- * @LastEditTime: 2021-03-20 21:43:01
- * @FilePath: \mall-server\app\controller\productController.js
+ * @LastEditTime: 2021-06-14 18:49:40
+ * @FilePath: \mall-server\app\controller\admin\productController.js
  */
 
 const { errorMsg, successMsg } = require('../../middleware/errorMessage');

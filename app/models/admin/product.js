@@ -2,12 +2,12 @@
  * @Date: 2021-01-25 23:26:20
  * @Description: 商品列表
  * @LastEditors: jun
- * @LastEditTime: 2021-03-20 21:09:07
- * @FilePath: \mall-server\app\models\product.js
+ * @LastEditTime: 2021-06-14 19:42:04
+ * @FilePath: \mall-server\app\models\admin\product.js
  */
 
-const { Sequelize, Model } = require('sequelize');
-const sequelize = require('../../config/db');
+const { Sequelize, Model, DataTypes } = require('sequelize');
+const sequelize = require('../../../config/db');
 
 class Product extends Model {
 
@@ -17,6 +17,10 @@ class Classify extends Model {
 
 };
 
+
+class ProductDetail extends Model {
+  
+}
 
 
 
@@ -81,6 +85,33 @@ Product.init({
   tableName: "product",//明确定义表名
 });
 
+// 商品详情
+ProductDetail.init({
+  number: {
+    type: Sequelize.STRING,
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  label: {
+    type: Sequelize.STRING
+  },
+  exhibitionImg: {
+    type: Sequelize.STRING
+  },
+  detailImg: {
+    type: Sequelize.STRING
+  }
+},{
+  sequelize,
+  modelName: 'detail',
+  tableName: "product_detail",//明确定义表名
+})
+
+Product.hasOne(ProductDetail);
+ProductDetail.belongsTo(Product);
+
 
 // 商品分类
 Classify.init({
@@ -105,5 +136,6 @@ Product.belongsTo(Classify);
 
 module.exports = {
   Product,
-  Classify
+  Classify,
+  ProductDetail
 }

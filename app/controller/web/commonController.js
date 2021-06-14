@@ -1,10 +1,17 @@
+/*
+ * @Date: 2021-05-30 14:25:11
+ * @Description: 
+ * @LastEditors: jun
+ * @LastEditTime: 2021-06-05 16:40:38
+ * @FilePath: \mall-server\app\controller\web\commonController.js
+ */
 const { errorMsg, successMsg } = require('../../middleware/errorMessage');
 
 
 const { HeaderList, BannerList } = require("../../models/web/common");
 
 
-const { Classify } = require("../../models/product");
+const { Classify } = require("../../models/admin/product");
 
 
 

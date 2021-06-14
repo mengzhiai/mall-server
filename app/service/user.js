@@ -2,10 +2,10 @@
  * @Date: 2021-02-09 23:28:56
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-03-06 15:09:35
+ * @LastEditTime: 2021-06-05 16:37:49
  * @FilePath: \mall-server\app\service\user.js
  */
-const User = require("../models/User");
+const User = require("../models/admin/user");
 
 module.exports = {
   // 登陆

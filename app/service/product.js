@@ -2,10 +2,10 @@
  * @Date: 2021-02-10 00:47:59
  * @Description: 商品列表
  * @LastEditors: jun
- * @LastEditTime: 2021-03-13 22:59:35
+ * @LastEditTime: 2021-06-14 19:36:36
  * @FilePath: \mall-server\app\service\product.js
  */
-const { Classify, Product } = require("../models/product");
+const { Classify, Product, ProductDetail } = require("../models/admin/product");
 const { Op } = require("sequelize");
 
 
@@ -38,7 +38,8 @@ const Goods = {
     return await Product.findOne({
       where: {
         id: id
-      }
+      },
+      include: [ProductDetail]
     })
   },
 
