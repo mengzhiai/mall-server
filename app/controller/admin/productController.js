@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:07:15
  * @Description: 商品管理
  * @LastEditors: jun
- * @LastEditTime: 2021-06-14 18:49:40
+ * @LastEditTime: 2021-07-03 17:40:32
  * @FilePath: \mall-server\app\controller\admin\productController.js
  */
 
@@ -14,6 +14,9 @@ const validoatorTool = require('../../middleware/validator');
 const { Goods, Category } = require('../../service/product');
 
 const { ParameterException } = require('../../middleware/httpException');
+
+const { Classify, Product, ProductDetail } = require("../../models/admin/product");
+const { Op } = require("sequelize");
 
 // 商品列表
 const productController = {

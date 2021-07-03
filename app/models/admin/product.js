@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:26:20
  * @Description: 商品列表
  * @LastEditors: jun
- * @LastEditTime: 2021-06-14 19:42:04
+ * @LastEditTime: 2021-07-03 22:47:42
  * @FilePath: \mall-server\app\models\admin\product.js
  */
 
@@ -13,14 +13,16 @@ class Product extends Model {
 
 };
 
+class ProductDetail extends Model {
+  
+}
+
 class Classify extends Model {
 
 };
 
 
-class ProductDetail extends Model {
-  
-}
+
 
 
 
@@ -78,12 +80,22 @@ Product.init({
   isNew: {
     type: Sequelize.INTEGER,
     defaultValue: 2
+  },
+  detailContent: {
+    type: Sequelize.STRING,
+    defaultValue: ''
+  },
+  label: {
+    type: Sequelize.STRING,
+    defaultValue: ''
   }
 }, {
   sequelize,
   // timestamps: false,//禁用时间戳
   tableName: "product",//明确定义表名
 });
+
+
 
 // 商品详情
 ProductDetail.init({
