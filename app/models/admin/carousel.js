@@ -2,7 +2,7 @@
  * @Date: 2021-07-04 01:51:25
  * @Description: 轮播图管理
  * @LastEditors: jun
- * @LastEditTime: 2021-07-04 02:26:41
+ * @LastEditTime: 2021-07-07 01:33:35
  * @FilePath: \mall-server\app\models\admin\carousel.js
  */
 
@@ -15,20 +15,32 @@ class Banner extends Model {
 
 Banner.init({
   title: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false
   },
   status: {
     type: Sequelize.STRING,
-    validate: {
-      min: 1,
-      max: 2
-    }
   },
-  // startTime:{
-  //   type: DataTypes.DATE
-  // },
-  jumpocation: {
+  img: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  site: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  startTime:{
+    type: DataTypes.DATE
+  },
+  endTime:{
+    type: DataTypes.DATE
+  },
+  jumpPosition: {
     type: Sequelize.STRING
+  },
+  jumpId: {
+    type: Sequelize.INTEGER,
+    allowNull: false
   }
 },{
   sequelize,
