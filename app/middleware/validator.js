@@ -2,7 +2,7 @@
  * @Date: 2021-01-27 22:30:43
  * @Description: 验证参数
  * @LastEditors: jun
- * @LastEditTime: 2021-07-07 01:16:38
+ * @LastEditTime: 2021-07-08 23:26:57
  * @FilePath: \mall-server\app\middleware\validator.js
  */
 
@@ -57,14 +57,6 @@ module.exports = {
 
     if(!params.img) {
       throw new ParameterException('图片不能为空')
-    }
-
-    if(!params.site) {
-      throw new ParameterException('显示位置不能为空');
-    }
-
-    if(!params.jumPosition) {
-      throw new ParameterException('跳转位置不能为空');
     }
 
     if(!params.jumpId) {

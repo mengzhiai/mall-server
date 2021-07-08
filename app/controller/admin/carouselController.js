@@ -2,7 +2,7 @@
  * @Date: 2021-07-04 01:17:40
  * @Description: 轮播图管理
  * @LastEditors: jun
- * @LastEditTime: 2021-07-07 01:24:13
+ * @LastEditTime: 2021-07-09 00:48:24
  * @FilePath: \mall-server\app\controller\admin\carouselController.js
  */
 const { errorMsg, successMsg } = require('../../middleware/errorMessage');
@@ -16,16 +16,68 @@ const { Op } = require("sequelize");
 const bannerController = {
   // 获取列表
   async list(ctx) {
-    await Banner.findAll().then(res => {
+    let { keyword } = ctx.query;
+    await Banner.findAll({
+      // where: {
+      //   keyword: {
+      //     [Op.like]: `${keyword}%` || ''
+      //   }
+      // },
+      'order': [['create_time', 'desc']],
+    }).then(res => {
       ctx.body = successMsg('获取成功', res)
     })
   },
 
   // 添加轮播图
   async add(ctx) {
+    let params = ctx.request.body;
     validoatorTool.banner(ctx.request.body);
-    Banner.create(params).then(res => {
-      ctx.body = successMsg('添加成功', res);
+    await Banner.create(params).then(res => {
+      if (res.id) {
+        ctx.body = successMsg('添加成功');
+      }
+    })
+  },
+
+  // 详情
+  async detail(ctx) {
+    const params = ctx.params;
+    await Banner.findOne({
+      where: {
+        id: params.id
+      }
+    }).then(res => {
+      ctx.body = successMsg('获取成功', res);
+    })
+  },
+
+  // 更新
+  async update(ctx) {
+    const params = ctx.request.body;
+    validoatorTool.banner(params);
+    await Banner.update(params, {
+      where: {
+        id: params.id
+      }
+    }).then(res => {
+      ctx.body = successMsg('更新成功', res);
+    })
+  },
+
+  // 更新
+  async delete(ctx) {
+    const { id } = ctx.params;
+    await Banner.destroy({
+      where: {
+        id
+      }
+    }).then(res => {
+      if (res === 1) {
+        ctx.body = successMsg('删除成功', res);
+      } else {
+        ctx.body = errorMsg('删除失败');
+      }
     })
   }
 }
