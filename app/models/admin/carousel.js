@@ -2,7 +2,7 @@
  * @Date: 2021-07-04 01:51:25
  * @Description: 轮播图管理
  * @LastEditors: jun
- * @LastEditTime: 2021-07-08 23:26:43
+ * @LastEditTime: 2021-07-10 15:51:38
  * @FilePath: \mall-server\app\models\admin\carousel.js
  */
 
@@ -19,7 +19,7 @@ Banner.init({
     allowNull: false
   },
   status: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
   },
   img: {
     type: Sequelize.STRING,

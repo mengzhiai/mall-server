@@ -2,7 +2,7 @@
  * @Date: 2021-07-04 01:13:59
  * @Description: 轮播图管理
  * @LastEditors: jun
- * @LastEditTime: 2021-07-08 23:59:28
+ * @LastEditTime: 2021-07-10 15:47:56
  * @FilePath: \mall-server\app\router\admin\carousel\carouselRouter.js
  */
 const Router = require('koa-router');
@@ -24,6 +24,9 @@ carouselRouter.put('/banner/update', bannerController.update);
 
 // 删除轮播图
 carouselRouter.delete('/banner/:id', bannerController.delete);
+
+// 修改状态
+carouselRouter.post('/banner/editStatus', bannerController.editStatus);
 
 
 module.exports = {

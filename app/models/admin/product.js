@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:26:20
  * @Description: 商品列表
  * @LastEditors: jun
- * @LastEditTime: 2021-07-03 22:47:42
+ * @LastEditTime: 2021-07-11 17:34:51
  * @FilePath: \mall-server\app\models\admin\product.js
  */
 
@@ -51,7 +51,7 @@ Product.init({
     type: Sequelize.STRING,
     allowNull: false
   },
-  productPrice: {
+  price: {
     type: Sequelize.DECIMAL,
     allowNull: false,
     validate: {
@@ -60,7 +60,7 @@ Product.init({
       }
     }
   },
-  productDesc: {
+  description: {
     type: Sequelize.STRING,
     defaultValue: ''
   },

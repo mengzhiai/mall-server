@@ -2,12 +2,12 @@
  * @Date: 2021-01-05 00:23:22
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-06-05 16:38:51
+ * @LastEditTime: 2021-07-11 17:55:37
  * @FilePath: \mall-server\app\models\admin\user.js
  */
 const bcrypt = require('bcryptjs');
 
-const { Sequelize, Model } = require('sequelize');
+const { Sequelize, Model, DataTypes } = require('sequelize');
 const sequelize = require('../../../config/db');
 
 const { ParameterException } = require('../../middleware/httpException');
@@ -62,6 +62,12 @@ User.init({
     type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true
+  },
+  uuid: {
+    primaryKey: true,
+    type: Sequelize.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    allowNull: false
   },
   userName: {
     type: Sequelize.STRING,

@@ -2,14 +2,14 @@
  * @Date: 2021-07-04 01:17:40
  * @Description: 轮播图管理
  * @LastEditors: jun
- * @LastEditTime: 2021-07-09 00:48:24
+ * @LastEditTime: 2021-07-10 15:48:03
  * @FilePath: \mall-server\app\controller\admin\carouselController.js
  */
 const { errorMsg, successMsg } = require('../../middleware/errorMessage');
 const validoatorTool = require('../../middleware/validator');
 
 const { Banner } = require("../../models/admin/carousel");
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 
 
 
@@ -65,7 +65,7 @@ const bannerController = {
     })
   },
 
-  // 更新
+  // 删除
   async delete(ctx) {
     const { id } = ctx.params;
     await Banner.destroy({
@@ -78,6 +78,20 @@ const bannerController = {
       } else {
         ctx.body = errorMsg('删除失败');
       }
+    })
+  },
+
+  // 修改状态
+  async editStatus(ctx) {
+    let { id, status } = ctx.request.body;
+    await Banner.update({
+      status: status
+    }, {
+      where: {
+        id
+      }
+    }).then(res => {
+      ctx.body = successMsg('修改成功');
     })
   }
 }

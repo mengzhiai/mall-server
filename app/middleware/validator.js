@@ -41,7 +41,7 @@ module.exports = {
     }
 
     // 商品价格
-    if(!params.productPrice) {
+    if(!params.price) {
       let error = new ParameterException('商品价格不能为空');
       throw error;
     }

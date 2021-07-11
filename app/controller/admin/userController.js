@@ -2,8 +2,8 @@
  * @Date: 2021-01-05 00:16:32
  * @Description: 用户信息
  * @LastEditors: jun
- * @LastEditTime: 2021-03-07 10:39:55
- * @FilePath: \mall-server\app\controller\userController.js
+ * @LastEditTime: 2021-07-11 18:17:59
+ * @FilePath: \mall-server\app\controller\admin\userController.js
  */
 const { errorMsg, successMsg } = require('../../middleware/errorMessage');
 
@@ -17,7 +17,6 @@ module.exports = {
   // 登录
   async login(ctx) {
     let { userName, password } = ctx.request.body;
-    ctx.session.userName = 'Tom';
     if (!userName || !password) {
       ctx.body = {
         code: 422,
@@ -55,7 +54,8 @@ module.exports = {
   async getList(ctx) {
     let params = ctx.query;
     let result = await User.list((parseInt(params.page) - 1) * parseInt(params.limit), parseInt(params.limit));
-    return ctx.body = successMsg('获取成功', result);
+    // return ctx.body = successMsg('获取成功', result);
+    return ctx.body = successMsg('获取成功', ctx.session.userName);
   },
 
 
