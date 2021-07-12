@@ -2,7 +2,7 @@
  * @Date: 2021-05-30 14:25:11
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-07-12 01:46:03
+ * @LastEditTime: 2021-07-12 22:42:16
  * @FilePath: \mall-server\app\controller\web\commonController.js
  */
 const { Op } = require("sequelize");
@@ -262,7 +262,11 @@ const commonController = {
         id: id
       }
     }).then(res => {
-      ctx.body = successMsg('删除成功');
+      if(res === 1) {
+        ctx.body = successMsg('删除成功', res);
+      } else {
+        ctx.body = errorMsg('删除成功');
+      }
     })
   }
 
