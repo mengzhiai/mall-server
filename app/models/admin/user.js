@@ -2,7 +2,7 @@
  * @Date: 2021-01-05 00:23:22
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-07-11 17:55:37
+ * @LastEditTime: 2021-07-17 21:43:33
  * @FilePath: \mall-server\app\models\admin\user.js
  */
 const bcrypt = require('bcryptjs');
@@ -68,6 +68,15 @@ User.init({
     type: Sequelize.UUID,
     defaultValue: DataTypes.UUIDV4,
     allowNull: false
+  },
+  phone: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    validate: {
+      isNumeric: {
+        msg: '手机号只能为数字'
+      }
+    }
   },
   userName: {
     type: Sequelize.STRING,

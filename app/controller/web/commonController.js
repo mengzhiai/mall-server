@@ -2,7 +2,7 @@
  * @Date: 2021-05-30 14:25:11
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-07-12 22:42:16
+ * @LastEditTime: 2021-07-17 21:44:34
  * @FilePath: \mall-server\app\controller\web\commonController.js
  */
 const { Op } = require("sequelize");
@@ -17,8 +17,11 @@ const { Banner } = require("../../models/admin/carousel");
 
 const { Classify, Product } = require("../../models/admin/product");
 
+const User = require("../../models/admin/user");
+
 const { HttpException } = require('../../middleware/httpException');
 
+const validoatorTool = require('../../middleware/validator');
 
 
 const commonController = {
@@ -60,6 +63,21 @@ const commonController = {
     await Product.findOne({
       where: {
         id: id
+      }
+    }).then(res => {
+      ctx.body = successMsg('获取成功', res);
+    })
+  },
+
+  // 分类下的商品
+  async classifyProduct(ctx) {
+    let { category } = ctx.query;
+    if(!category) {
+      throw new HttpException('分类id不存在');
+    }
+    await Product.findAll({
+      where: {
+        category: category
       }
     }).then(res => {
       ctx.body = successMsg('获取成功', res);
@@ -268,6 +286,21 @@ const commonController = {
         ctx.body = errorMsg('删除成功');
       }
     })
+  },
+
+
+  /* --用户注册-- */
+  async register(ctx) {
+    let params = ctx.request.body;
+    validoatorTool.userRegister(params);
+    let val = User.findOne({
+      where: {
+        phone: params.phone
+      }
+    })
+    ctx.body = {
+      val
+    }
   }
 
 }

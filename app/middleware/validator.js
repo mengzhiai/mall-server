@@ -2,7 +2,7 @@
  * @Date: 2021-01-27 22:30:43
  * @Description: 验证参数
  * @LastEditors: jun
- * @LastEditTime: 2021-07-08 23:26:57
+ * @LastEditTime: 2021-07-17 21:38:21
  * @FilePath: \mall-server\app\middleware\validator.js
  */
 
@@ -61,6 +61,16 @@ module.exports = {
 
     if(!params.jumpId) {
       throw new ParameterException('跳转id不能为空');
+    }
+  },
+
+  // 用户注册
+  userRegister(params){
+    if(!params.phone) {
+      throw new ParameterException('手机号不存在');
+    }
+    if(isNaN(params.phone) || params.length != 11) {
+      throw new ParameterException('请输入正确的手机号');
     }
   }
 }

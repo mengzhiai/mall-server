@@ -2,7 +2,7 @@
  * @Date: 2021-05-30 14:21:02
  * @Description: web端公用路由
  * @LastEditors: jun
- * @LastEditTime: 2021-07-12 01:19:06
+ * @LastEditTime: 2021-07-17 16:45:27
  * @FilePath: \mall-server\app\router\web\common.js
  */
 const Router = require('koa-router');
@@ -21,6 +21,10 @@ commonRouter.get('/bannerList', commonController.bannerList);
 
 // 获取分类列表
 commonRouter.get('/classifyList', commonController.classifyLitst);
+
+// 获取分类下的商品
+commonRouter.get('/classifyProduct', commonController.classifyProduct);
+
 
 // 获取商品详情
 commonRouter.get('/productDetail', commonController.productDetail);
@@ -55,6 +59,10 @@ commonRouter.get('/addressDetail/:id', commonController.addressDetail);
 commonRouter.put('/updateAddress', commonController.updateAddress);
 
 // 删除地址
-commonRouter.delete('/deleteAddress/:id', commonController.deleteAddress)
+commonRouter.delete('/deleteAddress/:id', commonController.deleteAddress);
+
+
+// 用户注册
+commonRouter.post('/register', commonController.register)
 
 module.exports = commonRouter;

@@ -2,7 +2,7 @@
  * @Date: 2021-02-10 00:47:59
  * @Description: 商品列表
  * @LastEditors: jun
- * @LastEditTime: 2021-07-03 15:39:11
+ * @LastEditTime: 2021-07-17 15:54:07
  * @FilePath: \mall-server\app\service\product.js
  */
 const { Classify, Product, ProductDetail } = require("../models/admin/product");
@@ -22,7 +22,7 @@ const Goods = {
           [Op.like]: `${keywords}%` || ''
         }
       },
-      'order': [['create_time', 'desc']],
+      'order': [['update_time', 'desc']],
       offset: page,
       limit: limit
     })
@@ -40,7 +40,7 @@ const Goods = {
       where: {
         id: id
       },
-      include: [ProductDetail]
+      // include: [ProductDetail]
     })
   },
 
