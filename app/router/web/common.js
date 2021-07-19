@@ -2,7 +2,7 @@
  * @Date: 2021-05-30 14:21:02
  * @Description: web端公用路由
  * @LastEditors: jun
- * @LastEditTime: 2021-07-17 16:45:27
+ * @LastEditTime: 2021-07-18 13:22:50
  * @FilePath: \mall-server\app\router\web\common.js
  */
 const Router = require('koa-router');
@@ -19,8 +19,10 @@ commonRouter.get('/headerList', commonController.headerList);
 // 获取bannder列表
 commonRouter.get('/bannerList', commonController.bannerList);
 
-// 获取分类列表
+
+// 获取分类列表及所有商品
 commonRouter.get('/classifyList', commonController.classifyLitst);
+
 
 // 获取分类下的商品
 commonRouter.get('/classifyProduct', commonController.classifyProduct);

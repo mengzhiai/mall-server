@@ -2,7 +2,7 @@
  * @Date: 2021-05-30 14:25:11
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-07-17 21:44:34
+ * @LastEditTime: 2021-07-18 13:24:46
  * @FilePath: \mall-server\app\controller\web\commonController.js
  */
 const { Op } = require("sequelize");
@@ -46,11 +46,20 @@ const commonController = {
 
   // 分类列表
   async classifyLitst(ctx) {
-    await Classify.findAll({
-      include: 'list'
-    }).then(res => {
-      ctx.body = successMsg('获取成功', res);
-    })
+    let { type } = ctx.query;
+    if (!type) {
+      // 获取所有分类及分类下的商品
+      await Classify.findAll({
+        include: 'list'
+      }).then(res => {
+        ctx.body = successMsg('获取成功', res);
+      })
+    } else if (type == 2) {
+      await Classify.findAll().then(res => {
+        ctx.body = successMsg('获取成功', res);
+      })
+    }
+
   },
 
   // 商品详情
@@ -72,7 +81,7 @@ const commonController = {
   // 分类下的商品
   async classifyProduct(ctx) {
     let { category } = ctx.query;
-    if(!category) {
+    if (!category) {
       throw new HttpException('分类id不存在');
     }
     await Product.findAll({
@@ -189,7 +198,7 @@ const commonController = {
     await Cart.update({
       num,
       totalPrice: totalPrice
-    },{
+    }, {
       where: {
         id
       }
@@ -214,7 +223,7 @@ const commonController = {
 
 
   // 订单列表
-  async orderList(ctx){
+  async orderList(ctx) {
     const userId = ctx.session.userId;
     await Order.findAll({
       where: {
@@ -252,7 +261,7 @@ const commonController = {
   async addressDetail(ctx) {
     const { id } = ctx.params;
     await Address.findOne({
-      where:{
+      where: {
         id
       }
     }).then(res => {
@@ -274,13 +283,13 @@ const commonController = {
 
   async deleteAddress(ctx) {
     const { id } = ctx.params;
-    ctx.body = {id}
+    ctx.body = { id }
     await Address.destroy({
       where: {
         id: id
       }
     }).then(res => {
-      if(res === 1) {
+      if (res === 1) {
         ctx.body = successMsg('删除成功', res);
       } else {
         ctx.body = errorMsg('删除成功');

@@ -2,7 +2,7 @@
  * @Date: 2021-01-27 22:30:43
  * @Description: 验证参数
  * @LastEditors: jun
- * @LastEditTime: 2021-07-17 21:38:21
+ * @LastEditTime: 2021-07-19 23:47:22
  * @FilePath: \mall-server\app\middleware\validator.js
  */
 
@@ -44,6 +44,10 @@ module.exports = {
     if(!params.price) {
       let error = new ParameterException('商品价格不能为空');
       throw error;
+    }
+
+    if(!params.imgList || !params.imgList.length) {
+      throw new ParameterException('请上传展示图');
     }
   },
 

@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:26:20
  * @Description: 商品列表
  * @LastEditors: jun
- * @LastEditTime: 2021-07-11 17:34:51
+ * @LastEditTime: 2021-07-20 00:28:54
  * @FilePath: \mall-server\app\models\admin\product.js
  */
 
@@ -20,6 +20,10 @@ class ProductDetail extends Model {
 class Classify extends Model {
 
 };
+
+class ExhibitionImg extends Model {
+
+}
 
 
 
@@ -96,6 +100,30 @@ Product.init({
 });
 
 
+// 商品展示图
+ExhibitionImg.init({
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  productId: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  img: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  }
+},{
+  sequelize,
+  tableName: "exhibition_img",//明确定义表名
+})
+
+Product.hasMany(ExhibitionImg, {foreignKey: 'productId', sourceKey: 'id', as: 'imgList'}),
+ExhibitionImg.belongsTo(Product);
+
+
 
 // 商品详情
 ProductDetail.init({
@@ -133,8 +161,13 @@ Classify.init({
     primaryKey: true
   },
   name: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false
   },
+  img: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
 },{
   sequelize,
   // timestamps: false,//禁用时间戳
@@ -149,5 +182,6 @@ Product.belongsTo(Classify);
 module.exports = {
   Product,
   Classify,
-  ProductDetail
+  ProductDetail,
+  ExhibitionImg
 }
