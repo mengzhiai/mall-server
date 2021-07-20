@@ -2,9 +2,11 @@
  * @Date: 2021-01-25 23:07:15
  * @Description: 商品管理
  * @LastEditors: jun
- * @LastEditTime: 2021-07-20 00:29:03
+ * @LastEditTime: 2021-07-21 00:30:31
  * @FilePath: \mall-server\app\controller\admin\productController.js
  */
+const sequelize = require('../../../config/db');
+const { Op } = require('sequelize');
 
 const { errorMsg, successMsg } = require('../../middleware/errorMessage');
 
@@ -16,7 +18,6 @@ const { Goods, Category } = require('../../service/product');
 const { ParameterException } = require('../../middleware/httpException');
 
 const { Classify, Product, ExhibitionImg } = require("../../models/admin/product");
-const { Op } = require("sequelize");
 
 // 商品列表
 const productController = {
@@ -45,41 +46,20 @@ const productController = {
     let params = ctx.request.body;
     // 验证字段
     validoatorTool.addProduct(params);
-    // let val = await Goods.add(params);
-    /* await Product.create(params).then(res => {
-      if(res) {
-        await ExhibitionImg.bulkCreate(params.imgList).then(r => {
-        ctx.body = successMsg('添加成功', r);
 
-        })
-      }
-    }) */
 
-    // 添加商品
-    let addVal = await Product.create(params).then(res => { return res });
-    if (addVal.id) {
-      // 添加商品展示图
-      let imgList = [];
-      let  = params.imgList.forEach(item => {
-        let obj = {
-          productId: addVal.id,
-          img: item.img,
-        }
-        imgList.push(obj);
+    const result = await sequelize.transaction(async (t) => {
+      const product = await Product.create(params, { transaction: t });
+
+      params.imgList.forEach(item => {
+        item.productId = product.id;
       })
 
-      await ExhibitionImg.bulkCreate(imgList).then(res => {
-        if(res) {
-          ctx.body = successMsg('添加成功')
-        }
-      }).catch(err => {
-        ctx.body = errorMsg('retr', err)
-      })
-    } else {
-      ctx.body = {a: 1}
-    }
+      await ExhibitionImg.bulkCreate(params.imgList, { transaction: t });
 
-
+      return product;
+    })
+    ctx.body = successMsg('添加成功', result)
   },
 
 
@@ -95,20 +75,13 @@ const productController = {
       ctx.body = (400, '', '商品id不能为空');
       return
     }
-
-    /* let data = await Goods.detail(id);
-    if (!data) {
-      ctx.body = errorMsg(400, '', '商品id不能为空');
-      return
-    }
-    ctx.body = successMsg('获取成功', data); */
     await Product.findOne({
       include: ['imgList'],
-      where:{
+      where: {
         id
       }
     }).then(res => {
-      if(res) {
+      if (res) {
         ctx.body = successMsg('获取成功', res);
       }
     })
@@ -118,27 +91,39 @@ const productController = {
 
   /**
    * @description: 更新
-   * @param {*}
-   * @return {*}
    */
   async update(ctx) {
     let params = ctx.request.body;
-    try {
-      let result = await Goods.update(params);
-      if (result.length) {
-        ctx.body = successMsg('更新成功');
-      }
-    } catch (err) {
-      ctx.body = errorMsg('更新失败', err);
-    }
 
+    validoatorTool.addProduct(params);
+
+    const result = await sequelize.transaction(async (t) => {
+      const product = await Product.update(params, {
+        where: {
+          id: params.id
+        }
+      }, { transaction: t });
+
+      await ExhibitionImg.destroy({
+        where: {
+          productId: params.id
+        }
+      }, { transaction: t })
+
+      params.imgList.forEach(item => {
+        item.productId = params.id;
+      })
+
+      await ExhibitionImg.bulkCreate(params.imgList, { transaction: t });
+      return product;
+    })
+    ctx.body = successMsg('更新成功', result);
   },
 
 
   /**
    * @description: 删除商品
    * @param {String} productId
-   * @return {*}
    */
   async delete(ctx) {
     let { id } = ctx.request.body;
@@ -147,23 +132,22 @@ const productController = {
       return
     }
 
-    try {
-      // 查询商品是否存在
-      let val = await Goods.detail(id);
-      if (!val) {
-        ctx.body = errorMsg('不存在此商品');
-        return
-      }
 
-      // 删除商品
-      let data = await Goods.delete(id);
-      ctx.body = data;
-      if (data) {
-        ctx.body = successMsg('删除成功');
-      }
-    } catch (err) {
-      ctx.body = errorMsg('删除失败', err);
-    }
+    const resultVal = await sequelize.transaction(async (t) => {
+      const productData = await Product.destroy({
+        where: {
+          id
+        }
+      }, { transaction: t });
+
+      await ExhibitionImg.destroy({
+        where: {
+          productId: id
+        }
+      })
+      return productData;
+    })
+    ctx.body = successMsg('删除成功', resultVal);
   },
 }
 

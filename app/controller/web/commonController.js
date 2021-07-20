@@ -2,7 +2,7 @@
  * @Date: 2021-05-30 14:25:11
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-07-18 13:24:46
+ * @LastEditTime: 2021-07-21 00:17:21
  * @FilePath: \mall-server\app\controller\web\commonController.js
  */
 const { Op } = require("sequelize");
@@ -70,6 +70,7 @@ const commonController = {
       return
     }
     await Product.findOne({
+      include: ['imgList'],
       where: {
         id: id
       }
@@ -146,7 +147,7 @@ const commonController = {
         productName: product.productName,
         img: product.img,
         price: product.price,
-        checked: 1,
+        checked: 2,
         totalPrice: product.price
       }
 

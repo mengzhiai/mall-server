@@ -2,7 +2,7 @@
  * @Date: 2021-02-17 15:23:10
  * @Description: 全局异常处理
  * @LastEditors: jun
- * @LastEditTime: 2021-07-07 01:35:16
+ * @LastEditTime: 2021-07-21 00:11:27
  * @FilePath: \mall-server\app\middleware\catchError.js
  */
 const { HttpException } =  require('./httpException');

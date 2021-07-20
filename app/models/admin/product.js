@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:26:20
  * @Description: 商品列表
  * @LastEditors: jun
- * @LastEditTime: 2021-07-20 00:28:54
+ * @LastEditTime: 2021-07-21 00:02:09
  * @FilePath: \mall-server\app\models\admin\product.js
  */
 
@@ -117,6 +117,7 @@ ExhibitionImg.init({
   }
 },{
   sequelize,
+  timestamps: false,
   tableName: "exhibition_img",//明确定义表名
 })
 
