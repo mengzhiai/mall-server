@@ -2,7 +2,7 @@
  * @Date: 2020-12-24 22:41:34
  * @Description: app.js
  * @LastEditors: jun
- * @LastEditTime: 2021-03-23 23:59:34
+ * @LastEditTime: 2021-07-26 23:35:14
  * @FilePath: \mall-server\app.js
  */
 const Koa = require('koa2');
@@ -15,6 +15,9 @@ const path = require('path');
 const koaStatic = require('koa-static');
 
 
+const cors = require('koa2-cors');
+
+
 const koajwt = require('koa-jwt');
 
 const session = require('koa-session');
@@ -22,6 +25,10 @@ const session = require('koa-session');
 
 // 引入自定义异常中间件
 const catchError = require('./app/middleware/catchError');
+
+
+
+app.use(cors());
 
 // 配置静态资源加载中间件
 app.use(koaStatic(

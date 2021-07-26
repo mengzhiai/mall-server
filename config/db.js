@@ -2,7 +2,7 @@
  * @Date: 2020-12-24 23:49:17
  * @Description: 
  * @LastEditors: jun
- * @LastEditTime: 2021-03-13 22:43:47
+ * @LastEditTime: 2021-07-24 01:03:51
  * @FilePath: \mall-server\config\db.js
  */
 /* var mysql = require('mysql');

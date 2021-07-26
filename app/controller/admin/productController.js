@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:07:15
  * @Description: 商品管理
  * @LastEditors: jun
- * @LastEditTime: 2021-07-21 00:30:31
+ * @LastEditTime: 2021-07-24 00:54:35
  * @FilePath: \mall-server\app\controller\admin\productController.js
  */
 const sequelize = require('../../../config/db');
@@ -166,10 +166,18 @@ const classifyController = {
   // 添加分类
   async add(ctx) {
     let params = ctx.request.body;
-    let result = await Category.add(params);
+    /* let result = await Category.add(params);
     if (result) {
       ctx.body = successMsg('添加成功');
-    }
+    } */
+    await Classify.create({
+      name: params.name,
+      img: params.img
+    }).then(res => {
+      ctx.body = successMsg('添加成功');
+    }).catch(err => {
+      ctx.body = errorMsg('添加失败', err)
+    })
   },
 
   // 分类详情

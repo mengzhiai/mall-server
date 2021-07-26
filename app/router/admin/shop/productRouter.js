@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:04:51
  * @Description: 商品管理
  * @LastEditors: jun
- * @LastEditTime: 2021-07-18 13:56:11
+ * @LastEditTime: 2021-07-24 00:40:34
  * @FilePath: \mall-server\app\router\admin\shop\productRouter.js
  */
 const Router = require('koa-router');
@@ -41,7 +41,7 @@ classifyRouter.get('/detail/:id', classifyController.detail);
 classifyRouter.put('/update', classifyController.update);
 
 // 删除分类
-classifyRouter.put('/delete/:id', classifyController.delete);
+classifyRouter.delete('/delete/:id', classifyController.delete);
 
 
 
