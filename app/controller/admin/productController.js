@@ -2,7 +2,7 @@
  * @Date: 2021-01-25 23:07:15
  * @Description: 商品管理
  * @LastEditors: jun
- * @LastEditTime: 2021-07-24 00:54:35
+ * @LastEditTime: 2021-07-29 13:10:32
  * @FilePath: \mall-server\app\controller\admin\productController.js
  */
 const sequelize = require('../../../config/db');
@@ -144,7 +144,7 @@ const productController = {
         where: {
           productId: id
         }
-      })
+      }, { transaction: t })
       return productData;
     })
     ctx.body = successMsg('删除成功', resultVal);

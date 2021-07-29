@@ -2,7 +2,7 @@
  * @Date: 2021-01-27 22:30:43
  * @Description: 验证参数
  * @LastEditors: jun
- * @LastEditTime: 2021-07-19 23:47:22
+ * @LastEditTime: 2021-07-27 22:30:57
  * @FilePath: \mall-server\app\middleware\validator.js
  */
 
@@ -76,5 +76,20 @@ module.exports = {
     if(isNaN(params.phone) || params.length != 11) {
       throw new ParameterException('请输入正确的手机号');
     }
+  },
+
+  // 购物车选中/取消
+  checkedData(params) {
+    if(!params.id) {
+      throw new ParameterException('购物车id不能为空');
+    }
+
+    if(!params.checked) {
+      throw new ParameterException('选中状态必传');
+    } 
+    
+    // if(params.checked != 1 || params.checked != 2) {
+    //   throw new ParameterException('选中状态参数有误');
+    // }
   }
 }

@@ -2,12 +2,12 @@
  * @Date: 2021-02-17 15:23:10
  * @Description: 全局异常处理
  * @LastEditors: jun
- * @LastEditTime: 2021-07-21 00:11:27
+ * @LastEditTime: 2021-07-27 22:27:11
  * @FilePath: \mall-server\app\middleware\catchError.js
  */
 const { HttpException } =  require('./httpException');
 const catchError = async (ctx, next) => {
-  try {
+  /* try {
     await next();
   } catch (error) {
     if(error instanceof HttpException) {
@@ -32,7 +32,8 @@ const catchError = async (ctx, next) => {
         request: `${ctx.method} ${ctx.path}`
       }
     }
-  }
+  } */
+  await next();
 }
 
 module.exports = catchError;
